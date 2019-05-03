@@ -6,6 +6,10 @@ using namespace std;
 
 int mcd(int,int);
 void ejercicio1();
+void ejercicio2();
+bool prim(int);
+int* calculadoraPrimos();
+void elimApunt(int*);
 
 int main(){
 	int opcm=0;
@@ -21,7 +25,7 @@ int main(){
 			ejercicio1();
 		}
 		if(opcm==2){
-			
+			ejercicio2();	
 		}
 		if(opcm==3){
 		
@@ -53,4 +57,69 @@ void ejercicio1(){
         	cin>>a;
         }//fin while
 	cout<<"El maximo comun multiplo es: "<<mcd(a,b)<<endl;
+}
+
+void ejercicio2(){
+	int* numprimos=calculadoraPrimos();
+	int numero;
+	stringstream fact;
+	cout<<"Ingrese un numero positivo para encontrar sus factores: "<<endl;
+	cin>>numero;
+	while(numero<=1){
+		cout<<"Ingrese un numero positivo para encontrar sus factores y que sea mayor a 1: "<<endl;
+	        cin>>numero;
+	}
+	int cont=0,exponente=0;;
+	fact<<numero<<" = ";
+	while(cont!=24){		
+		if(numero%numprimos[cont]==0){
+			numero=numero/numprimos[cont];
+			exponente++;
+		}else if(exponente!=0){
+			fact<<"("<<numprimos[cont]<<"^"<<exponente<<")";
+			cont++;
+			exponente=0;
+		}else{
+			cont++;
+		}
+		if(numero==0){
+			break;
+		}
+	}
+	cout<<"Los factores del numero son: "<<endl<<fact.str()<<endl;
+	elimApunt(numprimos);
+}
+
+int* calculadoraPrimos(){
+	int* primos=new int[25];
+	int nump=2,cont=0;
+	bool esprim=false;
+	while(cont!=24){
+		if(prim(nump)){
+			primos[cont]=nump;
+			cont++;
+			nump++;	
+		}else{
+			nump++;
+		}	
+	}
+	return primos;
+}
+
+void elimApunt(int* arreglo){
+	delete[] arreglo;
+}
+
+bool prim(int a){
+	int cont=0;
+	for(int i=1;i<=a;i++){
+		if(a%i==0){
+			cont++;
+		}
+	}
+	if(cont==2){
+		return true;
+	}else{	
+		return false;
+	}
 }
