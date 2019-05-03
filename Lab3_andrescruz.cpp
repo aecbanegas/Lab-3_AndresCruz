@@ -13,6 +13,8 @@ int* calculadoraPrimos();
 void elimApunt(int*);
 void ejercicio3();
 void imprimirBonito(string);
+bool verifcod(string,vector<string>);
+bool esnum(string);
 
 int main(){
 	int opcm=0;
@@ -146,19 +148,31 @@ void ejercicio3(){
 			string cod,nom,inicio,fin,paises,continente;
 			cout<<"Ingrese el codigo de guerra: "<<endl;
 			cin>>cod;
+			while(verifcod(cod,codigos)){
+				cout<<"Ingrese el codigo de guerra diferente ya que el anterior esta repetido: "<<endl;
+	                        cin>>cod;		
+			}
 			cout<<"Ingrese el nombre de la guerra: "<<endl;
 			getline(cin,nom);
 			getline(cin,nom);
 			cout<<"Ingrese el año de inicio: "<<endl;
 			cin>>inicio;
+			while(esnum(inicio)){
+				cout<<"Ingrese el año de inicio correctamente: "<<endl;
+	                        cin>>inicio;
+			}
 			cout<<"Ingrese el año en que finalizo: "<<endl;
 			cin>>fin;
+			while(esnum(fin)||fin<inicio){
+                                cout<<"Ingrese el año en que finalizo tiene que ser mayor a el año que inicio y escrito correctamente: "<<endl;
+                                cin>>fin;
+                        }
 			cout<<"Ingrese los paises que participaron en la guerra"<<endl
 				<<"separados unicamente por comas: "<<endl;
 			getline(cin,paises);
 			getline(cin,paises);
 			cout<<"Ingrese el nombre del continente en el que ocurrio la guerra: "<<endl;
-			cin>> continente;
+			getline(cin,continente);
 			datos<<cod<<";"<<nom<<";"<<inicio<<";"<<fin<<";"<<paises<<";"<<continente;
 			string guerra=datos.str();
 			guerras.push_back(guerra);
@@ -239,7 +253,7 @@ void ejercicio3(){
 					cout<<"NO hay guerras en el continente. "<<endl;
 				}else{
 					for(int i=0;i<posiciones.size();i++){
-						cout<<"Posicion #"<<i<<" : ";
+						cout<<"Posicion #"<<posiciones.at(i)<<" : ";
 						imprimirBonito(guerras.at(posiciones.at(i)));
 					}
 				}
@@ -275,5 +289,23 @@ void imprimirBonito(string guerra){
 			cout<<" , ";
 		}
 	}
-	cout<<" en el continente de "<<palabras.at(palabras.size()-1)<<endl;
+	cout<<" en el continente de "<<palabras.at(palabras.size()-1)<<". "<<endl;
+}
+bool verifcod(string cod,vector<string>codigos){
+	for(int i=0;i<codigos.size();i++){
+		if(cod==codigos.at(i)){
+			return true;
+		}
+	}
+	return false;
+}
+bool esnum(string num){
+	for(int i=0;i<num.length();i++){
+		if(isdigit(num[i])){
+		
+		}else{
+			return true;
+		}
+	}
+	return false;
 }
